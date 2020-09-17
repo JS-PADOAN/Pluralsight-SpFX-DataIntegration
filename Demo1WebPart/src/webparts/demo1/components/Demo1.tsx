@@ -3,8 +3,13 @@ import styles from './Demo1.module.scss';
 import { IDemo1Props } from './IDemo1Props';
 import { escape } from '@microsoft/sp-lodash-subset';
 
+import * as CarvedRockLib from 'carved-rock-library';
+
 export default class Demo1 extends React.Component<IDemo1Props, {}> {
   public render(): React.ReactElement<IDemo1Props> {
+
+let myinstance : CarvedRockLib.CarvedRockLibraryLibrary = new CarvedRockLib.CarvedRockLibraryLibrary();
+
     return (
       <div className={ styles.demo1 }>
         <div className={ styles.container }>
@@ -13,6 +18,7 @@ export default class Demo1 extends React.Component<IDemo1Props, {}> {
               <span className={ styles.title }>Welcome to SharePoint!</span>
               <p className={ styles.subTitle }>Customize SharePoint experiences using Web Parts.</p>
               <p className={ styles.description }>{escape(this.props.description)}</p>
+              <p>{ myinstance.getCurrentTime() }</p>
               <a href="https://aka.ms/spfx" className={ styles.button }>
                 <span className={ styles.label }>Learn more</span>
               </a>
