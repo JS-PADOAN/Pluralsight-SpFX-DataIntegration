@@ -1,0 +1,9 @@
+{
+  "id": "46013b39-5324-4f52-bbb1-d089e7066fc9",
+  "alias": "CarvedRockLibraryLibrary",
+  "componentType": "Library",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2
+}

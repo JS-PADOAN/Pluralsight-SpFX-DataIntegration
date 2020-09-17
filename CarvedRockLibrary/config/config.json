@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "carved-rock-library-library": {
+      "components": [
+        {
+          "entrypoint": "./lib/libraries/carvedRockLibrary/CarvedRockLibraryLibrary.js",
+          "manifest": "./src/libraries/carvedRockLibrary/CarvedRockLibraryLibrary.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "CarvedRockLibraryLibraryStrings": "lib/libraries/carvedRockLibrary/loc/{locale}.js"
+  }
+}

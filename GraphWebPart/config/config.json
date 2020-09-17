@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "employee-graph-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/employeeGraph/EmployeeGraphWebPart.js",
+          "manifest": "./src/webparts/employeeGraph/EmployeeGraphWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "EmployeeGraphWebPartStrings": "lib/webparts/employeeGraph/loc/{locale}.js"
+  }
+}
