@@ -4,6 +4,6 @@ export class CarvedRockLibraryLibrary {
   }
 
   public getCurrentTime(): string {
-    return 'The current time as returned from the corporate library is ' + new Date().toTimeString();
+    return 'Current time from Carved Rock Lib is ' + new Date().toTimeString()+ " ;-)";
   }
 }
