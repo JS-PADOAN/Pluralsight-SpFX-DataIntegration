@@ -21,7 +21,8 @@ export default class EmployeeProfileWebPart extends BaseClientSideWebPart<IEmplo
     const element: React.ReactElement<IEmployeeProfileProps> = React.createElement(
       EmployeeProfile,
       {
-        description: this.properties.description
+        description: this.properties.description,         
+        serviceScope: this.context.serviceScope
       }
     );
 
