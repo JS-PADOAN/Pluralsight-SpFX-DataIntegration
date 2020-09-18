@@ -12,6 +12,7 @@
     "test": "gulp test"
   },
   "dependencies": {
+    "carved-rock-library": "0.0.1",
     "react": "16.8.5",
     "react-dom": "16.8.5",
     "office-ui-fabric-react": "6.214.0",
