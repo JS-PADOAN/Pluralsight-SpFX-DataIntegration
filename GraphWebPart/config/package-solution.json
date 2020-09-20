@@ -13,7 +13,13 @@
       "privacyUrl": "",
       "termsOfUseUrl": "",
       "mpnId": ""
-    }
+    },
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.ReadBasic.All"
+      }
+    ]
   },
   "paths": {
     "zippedPackage": "solution/graph-web-part.sppkg"

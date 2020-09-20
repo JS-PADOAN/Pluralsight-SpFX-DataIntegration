@@ -4,7 +4,9 @@
    * Chrome browser: https://aka.ms/spfx-debugger-extensions
    */
   "version": "0.2.0",
-  "configurations": [{
+  "configurations": [
+
+  {
       "name": "Local workbench",
       "type": "chrome",
       "request": "launch",
@@ -25,7 +27,7 @@
       "name": "Hosted workbench",
       "type": "chrome",
       "request": "launch",
-      "url": "https://enter-your-SharePoint-site/_layouts/workbench.aspx",
+      "url": "https://m365x026310.sharepoint.com/sites/Sandbox/SitePages/test-EmployeeProfile-With-Graph-API.aspx",
       "webRoot": "${workspaceRoot}",
       "sourceMaps": true,
       "sourceMapPathOverrides": {

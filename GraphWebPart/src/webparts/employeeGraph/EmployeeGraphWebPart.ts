@@ -11,6 +11,8 @@ import * as strings from 'EmployeeGraphWebPartStrings';
 import EmployeeGraph from './components/EmployeeGraph';
 import { IEmployeeGraphProps } from './components/IEmployeeGraphProps';
 
+import { MSGraphClient } from '@microsoft/sp-http';
+
 export interface IEmployeeGraphWebPartProps {
   description: string;
 }
@@ -21,7 +23,8 @@ export default class EmployeeGraphWebPart extends BaseClientSideWebPart<IEmploye
     const element: React.ReactElement<IEmployeeGraphProps> = React.createElement(
       EmployeeGraph,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        context :  this.context
       }
     );
 
