@@ -18,7 +18,11 @@
       {
         "resource": "Microsoft Graph",
         "scope": "User.ReadBasic.All"
-      }
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Team.ReadBasic.All"
+      }      
     ]
   },
   "paths": {

@@ -15,7 +15,8 @@ export default class EmployeeGraph extends React.Component<IEmployeeGraphProps, 
     super(props);    
 
     this.state = {  
-      profile: null
+      profile: null, 
+      nbTeams: -1
     };        
   }
 
@@ -26,6 +27,13 @@ export default class EmployeeGraph extends React.Component<IEmployeeGraphProps, 
         // get information about the current user from the Microsoft Graph
         c.api('/me').get((error, user: MicrosoftGraph.User, rawResponse?: any) => {
           this.setState({ profile : user});          
+        });
+
+        c.api('/me/joinedTeams').get((error, response: any, rawResponse?: any) => {          
+          console.log("Teams: "+ JSON.stringify(response));
+
+          this.setState({ nbTeams : Object.keys(response).length});    
+
         });
       });
   }
@@ -41,6 +49,12 @@ export default class EmployeeGraph extends React.Component<IEmployeeGraphProps, 
               <p className={ styles.description }>DisplayName : {this.state.profile != null ? this.state.profile.displayName : ""}</p>
               <p className={ styles.description }> Email : { this.state.profile != null ? this.state.profile.mail : "" }</p>
               <p className={ styles.description }>Mobile Phone : { this.state.profile != null ? this.state.profile.mobilePhone : ""}</p>      
+            </div>
+           
+            <div className={ styles.column }>
+              <span className={ styles.title }>Teams</span>
+              <p className={ styles.subTitle }>{ this.state.nbTeams != -1 ? "You Belong to " + this.state.nbTeams + " Teams" : "" } </p>
+            
             </div>
           </div>
         </div>
