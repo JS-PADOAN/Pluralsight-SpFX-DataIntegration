@@ -74,25 +74,25 @@ export default class ArticlePageComments extends React.Component<IArticlePageCom
 
   private async _getTop5PageComments(): Promise<IPageComment[]> {
 
-    // const FakeSentences = [{ id:1, Sentence:"Woh, it's amazing"}
-    //  ,{id:2, Sentence : "Good content, but page very very slow..."}
-    //  ,{id:3, Sentence : "Bravo, beau travail"}
-    //  ,{id:4, Sentence : "El texto de muestra se enviará a la API de análisis de texto."}     
-    // ];
+    const FakeSentences = [{ id:1, Sentence:"Woh, it's amazing"}
+     ,{id:2, Sentence : "Good content, but page very very slow..."}
+     ,{id:3, Sentence : "Bravo, beau travail"}
+     ,{id:4, Sentence : "El texto de muestra se enviará a la API de análisis de texto."}     
+    ];
 
-    // const Fakecomments: IPageComment[] = FakeSentences.map(c => {
-    //   const comment: IPageComment = {
-    //     id: c.id,
-    //     author: "JS",
-    //     comment: c.Sentence,
-    //     language : "unknown",
-    //     Sentiment : "undefined",
-    //     confidence : 1
-    //   };
-    //   return comment;
-    // });
+    const Fakecomments: IPageComment[] = FakeSentences.map(c => {
+      const comment: IPageComment = {
+        id: c.id,
+        author: "JS",
+        comment: c.Sentence,
+        language : "unknown",
+        Sentiment : "undefined",
+        confidence : 1
+      };
+      return comment;
+    });
 
-    // return Fakecomments;
+    return Fakecomments;
 
     const pageCommentsEndpoint: string = `${this._baseUrl}/_api/web/lists('${this._listId}')/GetItemById(${this._listItemId})/Comments?$top=5&$inlineCount=AllPages`;
 
@@ -188,7 +188,9 @@ export default class ArticlePageComments extends React.Component<IArticlePageCom
   
   public render(): React.ReactElement<IArticlePageCommentsProps> {
   
-    let items = this.state.comments.map((item) => <li>{item.comment}, ({item.language}) Sentiment : {item.Sentiment} ({item.confidence})</li>);   
+    let items = this.state.comments
+      .filter((item) => item.Sentiment == this.props.chosenSentiment)
+      .map((item) => <li>{item.comment}, ({item.language}) Sentiment : {item.Sentiment} ({item.confidence})</li>);   
     
     return (
       <div className={ styles.articlePageComments }>

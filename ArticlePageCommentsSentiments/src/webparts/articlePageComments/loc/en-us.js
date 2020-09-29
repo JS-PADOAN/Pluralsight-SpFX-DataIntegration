@@ -3,6 +3,7 @@ define([], function() {
     "PropertyPaneDescription": "Description",
     "BasicGroupName": "Group Name",
     "DescriptionFieldLabel": "Description",
-    "TextSentimentApiFieldLabel" : "Api Key"
+    "TextSentimentApiFieldLabel" : "Api Key",
+    "ChosenSentimentFieldLabel" : "Chosen Sentiment"
   }
 });

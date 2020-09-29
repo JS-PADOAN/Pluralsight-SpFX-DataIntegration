@@ -3,6 +3,7 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
+  PropertyPaneDropdown,
   PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
@@ -18,9 +19,10 @@ export default class ArticlePageCommentsWebPart extends BaseClientSideWebPart<IA
     const element: React.ReactElement<IArticlePageCommentsProps> = React.createElement(
       ArticlePageComments,
       {
+        chosenSentiment: this.properties.chosenSentiment,
         textSentimentApiKey : this.properties.textSentimentApiKey,
         description: this.properties.description, 
-        context : this.context,
+        context : this.context
       }
     );
 
@@ -53,6 +55,14 @@ export default class ArticlePageCommentsWebPart extends BaseClientSideWebPart<IA
                 }),
                 PropertyPaneTextField('textSentimentApiKey', {
                   label: strings.TextSentimentApiFieldLabel
+                }),
+                PropertyPaneDropdown('chosenSentiment', {
+                  label: strings.ChosenSentimentFieldLabel,
+                  options: [
+                    { key: 'positive', text: 'Positive'},
+                    { key: 'neutral', text: 'Neutral' },
+                    { key: 'negative', text: 'Negative' }                    
+                  ]
                 })
               ]
             }

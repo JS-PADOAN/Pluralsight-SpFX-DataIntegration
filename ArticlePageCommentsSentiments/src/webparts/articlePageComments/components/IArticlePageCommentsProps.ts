@@ -5,4 +5,5 @@ export interface IArticlePageCommentsProps {
   description: string;
   context : WebPartContext;
   textSentimentApiKey?: string;
+  chosenSentiment? : string;
 }

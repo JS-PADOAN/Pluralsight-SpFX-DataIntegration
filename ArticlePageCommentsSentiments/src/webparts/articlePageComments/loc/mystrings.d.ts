@@ -3,6 +3,7 @@ declare interface IArticlePageCommentsWebPartStrings {
   BasicGroupName: string;
   DescriptionFieldLabel: string;
   TextSentimentApiFieldLabel: string;
+  ChosenSentimentFieldLabel : string;
 }
 
 declare module 'ArticlePageCommentsWebPartStrings' {
