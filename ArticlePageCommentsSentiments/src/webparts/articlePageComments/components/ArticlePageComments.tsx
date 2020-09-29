@@ -188,8 +188,10 @@ export default class ArticlePageComments extends React.Component<IArticlePageCom
   
   public render(): React.ReactElement<IArticlePageCommentsProps> {
   
-    let items = this.state.comments
-      .filter((item) => item.Sentiment == this.props.chosenSentiment)
+let validItems = this.state.comments
+.filter((item) => item.Sentiment == this.props.chosenSentiment);
+
+    let items = validItems
       .map((item) => <li>{item.comment}, ({item.language}) Sentiment : {item.Sentiment} ({item.confidence})</li>);   
     
     return (
@@ -197,7 +199,7 @@ export default class ArticlePageComments extends React.Component<IArticlePageCom
         <div className={ styles.container }>
           <div className={ styles.row }>
             <div className={ styles.column }>
-              <span className={ styles.title }>Here are the {this.state.comments.length} comment(s)</span>
+              <span className={ styles.title }>Here are the {validItems.length} comment(s) that are {this.props.chosenSentiment}</span>
               <ul>
                 {items}
               </ul>
