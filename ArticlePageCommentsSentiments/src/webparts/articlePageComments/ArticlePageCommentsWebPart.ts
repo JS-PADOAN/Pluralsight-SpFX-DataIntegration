@@ -12,18 +12,15 @@ import ArticlePageComments from './components/ArticlePageComments';
 import { IArticlePageCommentsProps } from './components/IArticlePageCommentsProps';
 
 
-export interface IArticlePageCommentsWebPartProps {
-  description: string;
-}
-
-export default class ArticlePageCommentsWebPart extends BaseClientSideWebPart<IArticlePageCommentsWebPartProps> {
+export default class ArticlePageCommentsWebPart extends BaseClientSideWebPart<IArticlePageCommentsProps> {
 
   public render(): void {
     const element: React.ReactElement<IArticlePageCommentsProps> = React.createElement(
       ArticlePageComments,
       {
+        textSentimentApiKey : this.properties.textSentimentApiKey,
         description: this.properties.description, 
-        context : this.context
+        context : this.context,
       }
     );
 
@@ -53,6 +50,9 @@ export default class ArticlePageCommentsWebPart extends BaseClientSideWebPart<IA
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyPaneTextField('textSentimentApiKey', {
+                  label: strings.TextSentimentApiFieldLabel
                 })
               ]
             }
