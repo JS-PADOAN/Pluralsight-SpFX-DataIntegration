@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/filterNews/FilterNewsWebPart.manifest.json"
         }
       ]
+    },
+    "news-sentiment-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/newsSentiment/NewsSentimentWebPart.js",
+          "manifest": "./src/webparts/newsSentiment/NewsSentimentWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "FilterNewsWebPartStrings": "lib/webparts/filterNews/loc/{locale}.js"
+    "FilterNewsWebPartStrings": "lib/webparts/filterNews/loc/{locale}.js",
+    "NewsSentimentWebPartStrings": "lib/webparts/newsSentiment/loc/{locale}.js"
   }
 }
