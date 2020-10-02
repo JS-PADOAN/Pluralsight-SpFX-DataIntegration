@@ -6,7 +6,11 @@ import { IFilterNewsState } from './IFilterNewsState';
 import { MAX_COLOR_VALUE } from 'office-ui-fabric-react';
 import { IData } from '../../../data/IData';
 
+const language:string = "en-US";
+
 export default class FilterNews extends React.Component<IFilterNewsProps, IFilterNewsState> {
+
+
 
   constructor(props) {
     super(props);
@@ -20,12 +24,15 @@ export default class FilterNews extends React.Component<IFilterNewsProps, IFilte
   public componentDidMount(): void {
     this.setState({
       proposedData: [
-        { keywords: 'Sports', language:"en" },
-      { keywords: 'Enonomy', language:"en" },
-      { keywords: 'Health' , language:"en"}
+        { keywords: 'Sports', language:language },
+      { keywords: 'Business', language:language },
+      { keywords: 'World' , language:language },
+      { keywords: 'Politics' , language:language },
+      { keywords: 'Products' , language:language },
+      { keywords: 'Entertainment' , language:language }
       ], currentData: 'Sports' // default  value
     });
-    this.props.onDataChanged( { keywords: 'Sports', language:"en" } ); // default  value
+    this.props.onDataChanged( { keywords: 'Sports', language:language } ); // default  value
   } 
 
   public render(): React.ReactElement<IFilterNewsProps> {
@@ -43,7 +50,7 @@ export default class FilterNews extends React.Component<IFilterNewsProps, IFilte
               const val:string = e.target.value;
               console.log(val); 
               webpart.setState({currentData: val});
-              const data:IData =  { keywords : val, language:"en" }
+              const data:IData =  { keywords : val, language:language }
               webpart.props.onDataChanged( data );
             } 
           }>

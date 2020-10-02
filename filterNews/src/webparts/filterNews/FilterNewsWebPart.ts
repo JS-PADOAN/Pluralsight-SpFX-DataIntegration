@@ -29,8 +29,7 @@ private _currentData : IData;
 /**
    * Event handler for selecting an event in the list
    */
-  private onDataChanged = (data: IData): void => {
-
+  private onDataChanged = (data: IData): void => {  
     debugger;
     // store the currently selected event in the class variable. Required
     // so that connected component will be able to retrieve its value

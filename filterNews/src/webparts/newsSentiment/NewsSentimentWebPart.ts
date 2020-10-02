@@ -3,6 +3,7 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
+  PropertyPaneDropdown,
   PropertyPaneDynamicField,
   PropertyPaneDynamicFieldSet,
   PropertyPaneTextField
@@ -13,24 +14,18 @@ import * as strings from 'NewsSentimentWebPartStrings';
 import NewsSentiment from './components/NewsSentiment';
 import { INewsSentimentProps } from './components/INewsSentimentProps';
 
-
-import { DynamicProperty } from '@microsoft/sp-component-base';
-import { IData } from '../../data/IData';
-
-
-export interface INewsSentimentWebPartProps {
-  description: string;
-  keywords:DynamicProperty<IData>;
-}
-
-export default class NewsSentimentWebPart extends BaseClientSideWebPart<INewsSentimentWebPartProps> {
+export default class NewsSentimentWebPart extends BaseClientSideWebPart<INewsSentimentProps> {
 
   public render(): void {
     const element: React.ReactElement<INewsSentimentProps> = React.createElement(
       NewsSentiment,
       {
         description: this.properties.description,
-        keywords : this.properties.keywords
+        keywords : this.properties.keywords,
+        textSentimentApiKey : this.properties.textSentimentApiKey,    
+        bingKey : this.properties.bingKey,    
+        context : this.context,
+        chosenSentiment: this.properties.chosenSentiment,
       }
     );
 
@@ -62,6 +57,20 @@ export default class NewsSentimentWebPart extends BaseClientSideWebPart<INewsSen
                     PropertyPaneDynamicField('keywords', {
                       label: 'Get keywords from'
                     })
+                  ]
+                }),
+                PropertyPaneTextField('textSentimentApiKey', {
+                  label: "Sentiment Api Key"
+                }),
+                PropertyPaneTextField('bingKey', {
+                  label: "Bing Api Key"
+                }),
+                PropertyPaneDropdown('chosenSentiment', {
+                  label: "Chosen sentiment",
+                  options: [
+                    { key: 'positive', text: 'Positive'},
+                    { key: 'neutral', text: 'Neutral' },
+                    { key: 'negative', text: 'Negative' }                    
                   ]
                 })
               ]
