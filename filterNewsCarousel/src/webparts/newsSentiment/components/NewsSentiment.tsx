@@ -5,6 +5,8 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { INewsSentimentState } from './INewsSentimentState';
 import { IData } from '../../../data/IData';
 
+import * as jQuery from 'jquery';
+
 import { 
   HttpClient,  
   IHttpClientOptions,
@@ -135,7 +137,6 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
     const requestHeaders: Headers = new Headers();
     requestHeaders.append("Accept", "application/json");
     requestHeaders.append("Content-Type", "application/json");
-    requestHeaders.append("Cache-Control", "no-cache");
     requestHeaders.append("Ocp-Apim-Subscription-Key", this.props.textSentimentApiKey);
 
     return requestHeaders;
@@ -151,27 +152,19 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
   }
   
   public render(): React.ReactElement<INewsSentimentProps> {
-
  
     let validItems = this.state.news
     .filter((item) => item.Sentiment == this.props.chosenSentiment);
     
         let items = validItems
-          .map((item) => <li>{item.name}, Sentiment : {item.Sentiment} ({item.confidence})</li>);   
+          .map((item) => <li><a href={item.url} target="_blank"><img src={item.thumbnail}/><span>{item.name}</span></a></li>);   
 
     return (
-      <div className={ styles.newsSentiment }>
-        <div className={ styles.container }>
-          <div className={ styles.row }>
-            <div className={ styles.column }>
-              <span className={ styles.title }>Data received from : {this.state.currentkeywords}</span>              
-              <ul>
-                {items}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+      <div>
+        <ul className="pgwSlider">
+          {items}
+        </ul>
+      </div>        
+    );   
   }
 }
