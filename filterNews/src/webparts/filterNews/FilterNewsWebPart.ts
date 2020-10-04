@@ -30,7 +30,6 @@ private _currentData : IData;
    * Event handler for selecting an event in the list
    */
   private onDataChanged = (data: IData): void => {  
-    debugger;
     // store the currently selected event in the class variable. Required
     // so that connected component will be able to retrieve its value
     this._currentData = data;
@@ -49,8 +48,7 @@ private _currentData : IData;
    * @param propertyId ID of the dynamic data set to retrieve the value for
    */
   public getPropertyValue(propertyId: string) : IData {    
-    if (propertyId == "keywords") {
-      //debugger;
+    if (propertyId == "keywords") {     
       let data = this._currentData ? {keywords : this._currentData.keywords, language: "en"} : undefined; //id of the property
       return data;
     }
@@ -71,7 +69,7 @@ private _currentData : IData;
               'keywords': "Sports"
           },
           metadata: {
-              'keywords': { title: "Expression or keywords to search News"}              
+              'keywords': { title: "Category to filter News"}              
           }
       };      
     }

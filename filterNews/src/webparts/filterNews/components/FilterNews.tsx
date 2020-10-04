@@ -45,12 +45,12 @@ export default class FilterNews extends React.Component<IFilterNewsProps, IFilte
     return (      
       <div className={ styles.filterNews }>
         <div className={ styles.container }>
-          <select value={this.state.currentData} onChange={function(e) 
+          <select value={this.state.currentData} onChange={ (e) => 
             {              
               const val:string = e.target.value;
               console.log(val); 
               webpart.setState({currentData: val});
-              const data:IData =  { keywords : val, language:language }
+              const data:IData =  { keywords : val, language:language };
               webpart.props.onDataChanged( data );
             } 
           }>
