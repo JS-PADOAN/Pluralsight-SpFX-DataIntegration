@@ -22,7 +22,7 @@ export default class EmployeeProfileWebPart extends BaseClientSideWebPart<IEmplo
       EmployeeProfile,
       {
         description: this.properties.description,         
-        serviceScope: this.context.serviceScope
+        context : this.context
       }
     );
 

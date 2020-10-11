@@ -1,36 +1,46 @@
-import { ServiceScope, ServiceKey } from "@microsoft/sp-core-library";    
 import { IUserProfile } from '../components/IUserProfile';  
-import { IUserProfileService } from './IUserProfileService';   
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';    
 import { PageContext } from '@microsoft/sp-page-context';    
    
-export class UserProfileService implements IUserProfileService {  
-    public static readonly serviceKey: ServiceKey<IUserProfileService> = ServiceKey.create<IUserProfileService>('userProfle:data-service', UserProfileService);    
-    private _spHttpClient: SPHttpClient;  
-    private _pageContext: PageContext;    
+export class UserProfileService  {      
+    private _spHttpClient: SPHttpClient;   
     private _currentWebUrl: string;    
   
-    constructor(serviceScope: ServiceScope) {    
-        serviceScope.whenFinished(() => {    
-            // Configure the required dependencies    
-            this._spHttpClient = serviceScope.consume(SPHttpClient.serviceKey);  
-            this._pageContext = serviceScope.consume(PageContext.serviceKey);    
-            this._currentWebUrl = this._pageContext.web.absoluteUrl;    
-        });    
+    constructor(spHttpClient: SPHttpClient, currentWebUrl:string) {             
+      this._spHttpClient = spHttpClient; 
+      this._currentWebUrl = currentWebUrl;                 
     }  
+
+    public async getMyUserProfile() : Promise<IUserProfile> {
+      let u = await this.getCurrentUserProfile();
+
+      for (let i: number = 0; i < u.UserProfileProperties.length; i++) {  
+        if (u.UserProfileProperties[i].Key == "FirstName") {  
+          u.FirstName = u.UserProfileProperties[i].Value;  
+        }  
   
-    public getUserProfileProperties(): Promise<IUserProfile> {  
-        return new Promise<IUserProfile>((resolve: (itemId: IUserProfile) => void, reject: (error: any) => void): void => {    
-            this.readUserProfile()    
-              .then((orgChartItems: IUserProfile): void => {    
-                resolve(this.processUserProfile(orgChartItems));    
-              });    
-          });  
-    }  
+        if (u.UserProfileProperties[i].Key == "LastName") {  
+          u.LastName = u.UserProfileProperties[i].Value;  
+        }  
   
-    private readUserProfile(): Promise<IUserProfile> {    
-        return new Promise<IUserProfile>((resolve: (itemId: IUserProfile) => void, reject: (error: any) => void): void => {    
-          this._spHttpClient.get(`${this._currentWebUrl}/_api/SP.UserProfiles.PeopleManager/getmyproperties`,    
+        if (u.UserProfileProperties[i].Key == "WorkPhone") {  
+          u.WorkPhone = u.UserProfileProperties[i].Value;  
+        }  
+  
+        if (u.UserProfileProperties[i].Key == "Department") {  
+          u.Department = u.UserProfileProperties[i].Value;  
+        }  
+  
+        if (u.UserProfileProperties[i].Key == "PictureURL") {  
+          u.PictureURL = u.UserProfileProperties[i].Value;  
+        }  
+      }
+
+      return u;
+    }   
+  
+    private async getCurrentUserProfile(): Promise<IUserProfile> {    
+        let response = await this._spHttpClient.get(`${this._currentWebUrl}/_api/SP.UserProfiles.PeopleManager/getmyproperties`,    
           SPHttpClient.configurations.v1,    
           {    
             headers: {    
@@ -38,17 +48,8 @@ export class UserProfileService implements IUserProfileService {
               'odata-version': ''    
             }    
           })    
-          .then((response: SPHttpClientResponse): Promise<{ value: IUserProfile }> => {    
-            return response.json();    
-          })    
-          .then((response: { value: IUserProfile }): void => {    
-            //resolve(response.value);    
-            var output: any = JSON.stringify(response);    
-            resolve(output);   
-          }, (error: any): void => {    
-            reject(error);    
-          });    
-        });        
+         
+          return response.json();                      
     }    
   
     private processUserProfile(orgChartItems: any): any {   
