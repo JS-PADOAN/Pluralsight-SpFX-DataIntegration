@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "article-page-comments-sentiments-pnp-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/articlePageCommentsSentimentsPnp/ArticlePageCommentsSentimentsPnpWebPart.js",
+          "manifest": "./src/webparts/articlePageCommentsSentimentsPnp/ArticlePageCommentsSentimentsPnpWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "ArticlePageCommentsSentimentsPnpWebPartStrings": "lib/webparts/articlePageCommentsSentimentsPnp/loc/{locale}.js"
+  }
+}

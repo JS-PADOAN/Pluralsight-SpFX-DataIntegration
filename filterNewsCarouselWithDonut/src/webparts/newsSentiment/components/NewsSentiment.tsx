@@ -11,6 +11,8 @@ require('../../../../node_modules/pgwslider/pgwslider.js');
 require('../../../../node_modules/pgwslider/pgwslider.css');
 
  
+import { ChartControl, ChartType } from '@pnp/spfx-controls-react/lib/ChartControl';
+
 import { 
   HttpClient,  
   IHttpClientOptions,
@@ -34,7 +36,7 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
   constructor(props) {
     super(props);
     this.state = {
-      news : []
+      news : []      
     };
   }
 
@@ -45,9 +47,9 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
   public async componentDidMount() {        
     const data: IData = this.props.keywords.tryGetValue();
     console.log(data); 
-    if(data && data.keywords != undefined)
+    if(data)
       {
-        //this.LoadNews(data);        
+        this.LoadNews(data);        
       }                                 
   }
 
@@ -61,6 +63,9 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
       
       this.currentkeyword = data;               
     }
+    else{
+      this.EnsureSlider();
+    }
   }
 
    private LoadNews(data : IData): void {
@@ -68,22 +73,27 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
       this._getSentiments(c).then(c2 => {
         this.setState({ news: c2 });         
                
-      if(!this.currentslider)
-      {                   
-        var newConfig:any={};
-        newConfig.listPosition = "left";
-        newConfig.displayControls=true;
-        newConfig.selectionMode="click";
-
-        this.currentslider = ($('.pgwSlider') as any).pgwSlider(newConfig);
-      }
-      else{
-        this.currentslider.reload(true);
-      }
+        this.EnsureSlider();
       
       });
     });         
   }
+
+  private EnsureSlider()   {
+    if(!this.currentslider)
+        {                   
+          var newConfig:any={};
+          newConfig.listPosition = "left";
+          newConfig.displayControls=true;
+          newConfig.selectionMode="click";
+
+          this.currentslider = ($('.pgwSlider') as any).pgwSlider(newConfig);
+        }
+        else{
+          this.currentslider.reload(true);
+        }
+  }
+
 
   private async _getSentiments(currentnews: INews[]): Promise<INews[]> {   
     const body: any = {
@@ -173,41 +183,76 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
 
     return requestHeaders;
   }
+
+  public RenderDonut() {
+
+    let positiveNews = this.state.news.filter((item) => item.Sentiment == "positive").length;
+    let NeutralNews = this.state.news.filter((item) => item.Sentiment == "neutral").length;
+    let NegativeNews = this.state.news.filter((item) => item.Sentiment == "negative").length;
+
+    // set the data
+    const chartData  = {
+        labels:
+          [
+            'Positive', 'Neutral', 'Negative'
+          ],
+        datasets: [
+          {
+            label: 'news',
+            data:
+              [
+                positiveNews, NeutralNews, NegativeNews
+              ]
+          }
+        ]
+      };
+
+    // set the options
+    const options = {
+        legend: {
+          display: true,
+          position: "left"
+        },
+        title: {
+          display: true,
+          text: "News Sentiments"
+        }
+      };
+      if(this.props.displaydonut)
+      {
+        return (
+          <ChartControl
+            type={ChartType.Doughnut}
+            data={chartData}
+            options= { options }
+          />);
+      }
+      else
+      {
+        return (<div/>);
+      }
+  }
    
   public render(): React.ReactElement<INewsSentimentProps> {
- 
+   
     let validItems = this.state.news
     .filter((item) => item.Sentiment == this.props.chosenSentiment);
     
         let items = validItems
           .map((item) => <li><img src={item.thumbnail}/><span>{item.name}</span></li>);   
-
-
-    if(validItems.length > 0)
-    {
-      return (     
-        
-        <div className={ styles.newsSentiment }>         
-            <div className="cntr mt20">        
-              <ul className="pgwSlider">
-                {items}
-              </ul>                                         
-            </div>      
-        </div>              
-      );   
-    }
-    else{
-      return (
-        <div className={ styles.newsSentiment }>
-          <div className={ styles.container }>
-            <div className={ styles.row }>
-              <div className={ styles.column }>
-                <span className={ styles.title }>No data to display...</span>              
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
+      
+    return (             
+      <div className={ styles.newsSentiment }>            
+          <div className="cntr mt20">        
+            <ul className="pgwSlider">
+              {items}
+            </ul>                                         
+          </div>  
+          <div>
+            { this.RenderDonut() }
+          </div>    
+      </div>              
+    );   
+   
   }
 }
