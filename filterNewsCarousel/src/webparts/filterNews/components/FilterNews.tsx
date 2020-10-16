@@ -1,16 +1,12 @@
 import * as React from 'react';
 import styles from './FilterNews.module.scss';
 import { IFilterNewsProps } from './IFilterNewsProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import { IFilterNewsState } from './IFilterNewsState';
-import { MAX_COLOR_VALUE } from 'office-ui-fabric-react';
 import { IData } from '../../../data/IData';
 
 const language:string = "en-US";
 
 export default class FilterNews extends React.Component<IFilterNewsProps, IFilterNewsState> {
-
-
 
   constructor(props) {
     super(props);
@@ -19,7 +15,6 @@ export default class FilterNews extends React.Component<IFilterNewsProps, IFilte
       currentData: ""
     };
   }
-
 
   public componentDidMount(): void {
     this.setState({
@@ -48,7 +43,7 @@ export default class FilterNews extends React.Component<IFilterNewsProps, IFilte
           <select value={this.state.currentData} onChange={ (e) => 
             {              
               const val:string = e.target.value;
-              console.log(val); 
+              //console.log(val); 
               webpart.setState({currentData: val});
               const data:IData =  { keywords : val, language:language };
               webpart.props.onDataChanged( data );

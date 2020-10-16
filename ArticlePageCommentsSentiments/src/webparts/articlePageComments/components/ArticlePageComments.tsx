@@ -23,14 +23,7 @@ export default class ArticlePageComments extends React.Component<IArticlePageCom
   constructor(props: IArticlePageCommentsProps, state: IArticlePageCommentsState) {  
     super(props);    
 
-    this.state = {  
-      comments: []
-    };     
-  }
-    
-  public componentWillMount(): void {
-
-  let c = this.props.context;
+    let c = props.context;
 
   //Service instanciation
     this.service = new SentimentService(
@@ -40,7 +33,11 @@ export default class ArticlePageComments extends React.Component<IArticlePageCom
       c.spHttpClient,
       c.httpClient, this.props.textSentimentApiKey
     );
-  }
+
+    this.state = {  
+      comments: []
+    };     
+  }    
 
   public componentDidMount(): void {  
 

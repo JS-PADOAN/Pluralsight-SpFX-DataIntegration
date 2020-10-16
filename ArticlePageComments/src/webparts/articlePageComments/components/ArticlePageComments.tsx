@@ -16,23 +16,15 @@ import {
 
 export default class ArticlePageComments extends React.Component<IArticlePageCommentsProps,IArticlePageCommentsState> {
   
-  
-
-  constructor(props: IArticlePageCommentsProps, state: IArticlePageCommentsState) {  
-    super(props);    
-
-    this.state = {  
-      comments: []
-    };     
-  }
   private _baseUrl: string;
   private _listId: string;
   private _listItemId: string;
   private _spHttpClient: SPHttpClient;
-  
-  public componentWillMount(): void {
 
-  let c = this.props.context;
+  constructor(props: IArticlePageCommentsProps, state: IArticlePageCommentsState) {  
+    super(props);    
+
+    let c = props.context;
 
     this._baseUrl = c.pageContext.web.absoluteUrl;
     this._listId =
@@ -42,7 +34,11 @@ export default class ArticlePageComments extends React.Component<IArticlePageCom
      c.pageContext.listItem &&
      c.pageContext.listItem.id.toString();
     this._spHttpClient = c.spHttpClient; 
-  }
+
+    this.state = {  
+      comments: []
+    };     
+  }    
 
   public componentDidMount(): void {  
     this._getTop5PageComments().then (c=> {

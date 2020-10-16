@@ -21,15 +21,8 @@ export default class ArticlePageCommentsSentimentsPnp extends React.Component<IA
    // constructor to intialize state and pnp sp object.  
    constructor(props: IArticlePageCommentsSentimentsPnpProps,state:IArticlePageCommentsSentimentsPnpState) {  
     super(props);  
-    this.state = {page : undefined };  
-    sp.setup({  
-      spfxContext: this.props.context  
-    });  
-  }  
 
-  public componentWillMount(): void {
-
-    let c = this.props.context;
+    let c = props.context;
   
     //Service instanciation
       this.service = new SentimentService(
@@ -37,9 +30,14 @@ export default class ArticlePageCommentsSentimentsPnp extends React.Component<IA
         c.pageContext.list && c.pageContext.list.id.toString(),
         c.pageContext.listItem && c.pageContext.listItem.id.toString(),
         c.spHttpClient,
-        c.httpClient, this.props.textSentimentApiKey
+        c.httpClient, props.textSentimentApiKey
       );
-    }
+
+    this.state = {page : undefined };  
+    sp.setup({  
+      spfxContext: this.props.context  
+    });  
+  }  
 
   public async componentDidMount(): Promise<void> {  
     let p = await this.getMostRecentPage();

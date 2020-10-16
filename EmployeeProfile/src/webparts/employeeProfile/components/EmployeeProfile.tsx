@@ -8,16 +8,13 @@ export default class EmployeeProfile extends React.Component<IEmployeeProfilePro
   private service: UserProfileService;
 
   constructor(props: IEmployeeProfileProps, state: IUserProfileViewerState) {  
-    super(props);     
-  }
-
-  public componentWillMount(): void {      
+    super(props);  
+    
     this.service = new UserProfileService(
-      this.props.context.spHttpClient,
-      this.props.context.pageContext.web.absoluteUrl
-      );       
-  }    
-  
+      props.context.spHttpClient,
+      props.context.pageContext.web.absoluteUrl
+      ); 
+  }  
   
   public componentDidMount(): void {  
 

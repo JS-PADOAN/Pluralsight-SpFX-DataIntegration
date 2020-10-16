@@ -1,13 +1,11 @@
 import * as React from 'react';
 import styles from './NewsSentiment.module.scss';
 import { INewsSentimentProps } from './INewsSentimentProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import { INewsSentimentState } from './INewsSentimentState';
 import { IData } from '../../../data/IData';
 
 import { 
   HttpClient,  
-  IHttpClientOptions,
   HttpClientResponse
 } from "@microsoft/sp-http";
 import INews from './INews';
@@ -21,15 +19,14 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
 
   constructor(props) {
     super(props);
+
+    this._ApihttpClient = props.context.httpClient;
+
     this.state = {
       currentkeywords : undefined,
       news : []
     };
   }
-
-  public componentWillMount(): void {
-      this._ApihttpClient = this.props.context.httpClient;
-    }
 
   public async componentDidMount() {        
     const data: IData = this.props.keywords.tryGetValue();
@@ -39,8 +36,6 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
         this.LoadNews(data);
       }
   }
-
-
 
   public async componentDidUpdate?(prevProps: INewsSentimentProps, prevState: INewsSentimentState, snapshot: any): Promise<void> {
     
@@ -127,9 +122,7 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
     });
 
     return comments;
-
   }
-
 
   private _prepareHeadersForSentimentApi(): Headers {
     const requestHeaders: Headers = new Headers();
@@ -151,7 +144,6 @@ export default class NewsSentiment extends React.Component<INewsSentimentProps, 
   }
   
   public render(): React.ReactElement<INewsSentimentProps> {
-
  
     let validItems = this.state.news
     .filter((item) => item.Sentiment == this.props.chosenSentiment);
